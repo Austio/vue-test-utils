@@ -4,6 +4,22 @@ import mount from '~src/mount'
 import ComponentWithProps from '~resources/components/component-with-props.vue'
 import ComponentWithMixin from '~resources/components/component-with-mixin.vue'
 
+describe.only('mount-attrs', () => {
+  it('attaches extra non props as atters to the parent node', () => {
+    const wrapper = mount(ComponentWithProps, {
+      components: { ComponentWithProps },
+      propsData: {
+        prop1: 'props1',
+        nonProp: 'nonProp'
+      }
+    });
+
+    console.info('wrapper html with attr in propsData', wrapper.html())
+
+    expect(wrapper.hasAttribute('nonProp', 'nonProps')).to.be.true;
+  });
+})
+
 describe('mount', () => {
   it('returns new VueWrapper with mounted Vue instance if no options are passed', () => {
     const compiled = compileToFunctions('<div><input /></div>')
