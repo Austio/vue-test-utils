@@ -85,4 +85,43 @@ describe('mount', () => {
     expect(wrapper.vm).to.be.an('object')
     expect(wrapper.html()).to.equal(`<div>foo</div>`)
   })
+
+  it.only('non prop attrs', () => {
+    const wrapper = mount(ComponentWithProps, {
+      propsData: {
+        prop1: '1',
+        prop2: '2',
+        title: '3'
+      }
+    })
+
+    expect(wrapper.html()).to.equal(`<div title="3"><p class="prop-1">1</p> <p class="prop-2">2</p></div>`)
+  })
+
+  xit('non prop attributes', () => {
+    const wrapper = mount({
+      template: `<div><div>foo</div></div>`,
+      inheritAttrs: false
+    }, {
+      propsData: {
+        attr1: '1'
+      }
+    });
+
+    expect(wrapper.html()).to.equal(`<div attr1="1"><div>foo</div></div>`)
+  })
+
+  xit('inheirtAttrs', () => {
+    const wrapper = mount({
+      template: `<div><div v-bind="$attrs">foo</div></div>`,
+      inheritAttrs: false,
+    }, {
+      propsData: {
+        attr1: '1',
+        attr2: '2'
+      }
+    });
+
+    expect(wrapper.html()).to.equal(`<div><div attr1="1" attr2="2">foo</div></div>`)
+  })
 })

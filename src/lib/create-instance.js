@@ -10,6 +10,7 @@ import { throwError } from './util'
 import cloneDeep from 'lodash/cloneDeep'
 import { compileTemplate } from './compile-template'
 import createLocalVue from '../create-local-vue'
+import getNonPropAttrs from './get-non-prop-attrs'
 
 export default function createConstructor (
   component: Component,
@@ -56,12 +57,19 @@ export default function createConstructor (
 
   const vm = new Constructor(options)
 
-  addAttrs(vm, options.attrs)
+  const nonPropAttrs = getNonPropAttrs(component.props, options.propsData)
+  const attrs = {
+    ...nonPropAttrs,
+    ...options.attrs
+  }
+
+  addAttrs(vm, attrs)
   addListeners(vm, options.listeners)
 
   if (options.slots) {
     addSlots(vm, options.slots)
   }
 
+  console.log(vm)
   return vm
 }
