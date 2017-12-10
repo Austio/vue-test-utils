@@ -148,4 +148,29 @@ describe('mount', () => {
     const fn = () => mount(TestComponent)
     expect(fn).to.throw()
   })
+
+  describe.only('new', () => {
+    it('applies inheritAttrs', () => {
+      const wrapper = mount(ComponentWithProps, { propsData: { prop1: 'prop1', extra: 'attr' }})
+
+      expect(wrapper.vm).to.be.an('object')
+      expect(wrapper.html()).to.equal(`<div extra="attrs"><p class="prop-1">prop1</p> <p class="prop-2"></p></div>`)
+    })
+
+    it('when using compile to function', () => {
+      const compiled = compileToFunctions('<component-with-props extra="attrs"></component-with-props>')
+      const wrapper = mount(compiled, {
+        components: {
+          ComponentWithProps
+        },
+        propsData: {
+          prop1: 'prop1'
+        },
+      })
+
+      expect(wrapper.vm).to.be.an('object')
+      expect(wrapper.html()).to.equal(`<div extra="attrs"><p class="prop-1">prop1</p> <p class="prop-2"></p></div>`)
+      expect(wrapper.html()).to.equal('<div extra="attrs"><p class="prop-1"></p> <p class="prop-2"></p></div>'))
+    })
+  })
 })

@@ -2,7 +2,7 @@ const webpackConfig = require('../../../build/webpack.test.config.js')
 
 module.exports = function (config) {
   config.set({
-    browsers: ['ChromeHeadless'],
+    browsers: ['Chrome'],
     frameworks: ['mocha', 'sinon-chai', 'phantomjs-shim'],
     reporters: ['spec', 'coverage'],
     files: [
