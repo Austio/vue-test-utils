@@ -18,7 +18,7 @@ export default function createConstructor (
   component: Component,
   options: Options
 ): Component {
-  const mountingOptions = extractOptions(options)
+  const mountingOptions = extractOptions(component, options)
 
   const vue = mountingOptions.localVue || createLocalVue()
 

@@ -148,4 +148,14 @@ describe('mount', () => {
     const fn = () => mount(TestComponent)
     expect(fn).to.throw()
   })
+
+  describe.only('new', () => {
+    it('applies inheritAttrs', () => {
+      const wrapper = mount(ComponentWithProps, { attachToDocument:true, propsData: { prop1: 'prop1', extra: 'attr' }, attrs: { height: '50px' } })
+
+      expect(wrapper.vm).to.be.an('object')
+      expect(wrapper.vm.$attrs).to.eql({ height: "50px", extra: "attr" });
+      expect(wrapper.html()).to.equal(`<div extra="attrs" height="50px"><p class="prop-1">prop1</p> <p class="prop-2"></p></div>`)
+    })
+  })
 })
